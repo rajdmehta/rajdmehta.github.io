@@ -3,145 +3,1114 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Raj Mehta - Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet">
+  <meta name="color-scheme" content="dark" />
+
+  <title>Raj Mehta — Embedded Systems • Developer • Builder</title>
+  <meta name="description" content="Raj Mehta — Embedded Systems Enthusiast, Developer, Builder. Projects in ROS2, STM32 bare-metal, full-stack apps, and more." />
+  <meta name="author" content="Raj Mehta" />
+
+  <!-- Open Graph (nice previews when you share your link) -->
+  <meta property="og:title" content="Raj Mehta — Portfolio" />
+  <meta property="og:description" content="Embedded Systems • Developer • Builder — Projects in ROS2, STM32, and full-stack." />
+  <meta property="og:type" content="website" />
+  <!-- Optional: add an image later and update this -->
+  <!-- <meta property="og:image" content="https://YOURDOMAIN/og.png" /> -->
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons (Font Awesome) -->
   <script src="https://kit.fontawesome.com/a2e0e6cfd8.js" crossorigin="anonymous"></script>
+
   <style>
-    body {
+    :root{
+      --bg0:#070a10;
+      --bg1:#0b1220;
+      --panel: rgba(22, 27, 34, .72);
+      --panel2: rgba(22, 27, 34, .55);
+      --border: rgba(255,255,255,.10);
+      --text:#c9d1d9;
+      --muted:#9aa4b2;
+      --brand:#58a6ff;
+      --brand2:#9b7bff;
+      --good:#3ddc97;
+      --warn:#ffcc66;
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --shadow2: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 15% 15%, rgba(88,166,255,.20), transparent 55%),
+                  radial-gradient(900px 500px at 85% 25%, rgba(155,123,255,.18), transparent 55%),
+                  radial-gradient(700px 500px at 50% 95%, rgba(61,220,151,.12), transparent 55%),
+                  linear-gradient(180deg, var(--bg0), var(--bg1));
+      color: var(--text);
+      overflow-x:hidden;
+    }
+
+    /* Subtle animated glow mesh */
+    .mesh {
+      position: fixed;
+      inset:-200px;
+      z-index:-2;
+      filter: blur(60px);
+      opacity:.55;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(88,166,255,.35), transparent 35%),
+        radial-gradient(circle at 80% 20%, rgba(155,123,255,.30), transparent 35%),
+        radial-gradient(circle at 55% 80%, rgba(61,220,151,.22), transparent 40%);
+      animation: drift 12s ease-in-out infinite alternate;
+      transform: translate3d(0,0,0);
+    }
+    @keyframes drift {
+      from { transform: translate(-2%, -1%) scale(1.02); }
+      to   { transform: translate( 2%,  1%) scale(1.05); }
+    }
+
+    /* Particle canvas */
+    canvas#particles{
+      position: fixed;
+      inset: 0;
+      z-index:-1;
+      opacity:.55;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: none; }
+
+    /* Layout */
+    .container{
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* Top nav */
+    .nav{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(7,10,16,.75), rgba(7,10,16,.25));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 0;
+      gap: 12px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:700;
+      letter-spacing:.3px;
+    }
+    .brand-badge{
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(88,166,255,.9), rgba(155,123,255,.85));
+      box-shadow: 0 10px 25px rgba(88,166,255,.20);
+      display:grid;
+      place-items:center;
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: 14px;
+      color: #0b1220;
+    }
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+    .nav-links a{
+      padding: 10px 12px;
+      border-radius: 12px;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 14px;
+      border: 1px solid transparent;
+      transition: .2s ease;
+    }
+    .nav-links a:hover{
+      color: var(--text);
+      border-color: rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-weight: 700;
+      transition: .2s ease;
+      box-shadow: var(--shadow2);
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(88,166,255,.35);
+      background: rgba(88,166,255,.08);
+    }
+    .btn.primary{
+      border-color: rgba(88,166,255,.35);
+      background: linear-gradient(135deg, rgba(88,166,255,.18), rgba(155,123,255,.12));
+    }
+    .btn.ghost{
+      box-shadow:none;
+      background: transparent;
+      border-color: rgba(255,255,255,.10);
+    }
+
+    /* Hero */
+    header.hero{
+      padding: 64px 0 28px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 24px;
+      align-items: center;
+    }
+    @media (max-width: 960px){
+      .hero-grid{ grid-template-columns: 1fr; }
+    }
+
+    .hero-card{
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(22,27,34,.65), rgba(22,27,34,.40));
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      position: relative;
+      overflow:hidden;
+    }
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(600px 250px at 20% 20%, rgba(88,166,255,.22), transparent 60%),
+                  radial-gradient(500px 280px at 90% 10%, rgba(155,123,255,.18), transparent 60%),
+                  radial-gradient(500px 250px at 40% 120%, rgba(61,220,151,.12), transparent 60%);
+      pointer-events:none;
+    }
+    .hero-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .headline{
       margin: 0;
-      font-family: 'Roboto', sans-serif;
-      background: #0d1117;
-      color: #c9d1d9;
-      overflow-x: hidden;
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: clamp(32px, 4vw, 52px);
+      letter-spacing: .6px;
+      line-height: 1.05;
     }
-    .header {
-      text-align: center;
-      padding: 80px 20px 40px;
-      animation: fadeInDown 1s ease-in-out;
+    .subhead{
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 70ch;
+      position: relative;
+      z-index: 1;
     }
-    .header h1 {
-      font-size: 3em;
-      margin: 0;
-      color: #58a6ff;
+    .tagline{
+      display:inline-flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+      position: relative;
+      z-index: 1;
     }
-    .header h2 {
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .chip i { color: rgba(88,166,255,.9); }
+
+    .hero-actions{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Side panel (quick info) */
+    .side{
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(22,27,34,.62), rgba(22,27,34,.30));
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: var(--shadow2);
+      padding: 22px;
+    }
+    .side h3{
+      margin:0 0 10px;
+      font-size: 14px;
+      letter-spacing:.3px;
+      color: rgba(255,255,255,.82);
+      text-transform: uppercase;
+    }
+    .side p{
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    .quick{
+      display:grid;
+      gap: 10px;
+    }
+    .quick a{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      transition: .2s ease;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .quick a:hover{
+      transform: translateY(-1px);
+      border-color: rgba(88,166,255,.35);
+      background: rgba(88,166,255,.07);
+    }
+    .quick small{ color: var(--muted); font-weight:600; }
+
+    /* Section headers */
+    section{
+      padding: 24px 0;
+    }
+    .section-title{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 14px;
+      margin: 20px 0 16px;
+      flex-wrap: wrap;
+    }
+    .section-title h2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing:.2px;
+    }
+    .section-title p{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* Filters */
+    .filters{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items:center;
+    }
+    .filter-btn{
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: .2px;
+      cursor:pointer;
+      transition: .2s ease;
+      user-select:none;
+    }
+    .filter-btn:hover{
+      color: var(--text);
+      border-color: rgba(255,255,255,.16);
+      transform: translateY(-1px);
+    }
+    .filter-btn.active{
+      color: #0b1220;
+      border-color: rgba(88,166,255,.35);
+      background: linear-gradient(135deg, rgba(88,166,255,.90), rgba(155,123,255,.75));
+      box-shadow: 0 10px 30px rgba(88,166,255,.20);
+    }
+
+    /* Projects grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .project{
+      grid-column: span 6;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(22,27,34,.62), rgba(22,27,34,.28));
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow2);
+      padding: 18px;
+      position: relative;
+      overflow:hidden;
+      transition: .25s ease;
+      cursor:pointer;
+      min-height: 160px;
+    }
+    .project:hover{
+      transform: translateY(-2px);
+      border-color: rgba(88,166,255,.35);
+      background: linear-gradient(180deg, rgba(22,27,34,.70), rgba(22,27,34,.30));
+    }
+    .project::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(420px 160px at 15% 10%, rgba(88,166,255,.16), transparent 65%),
+                  radial-gradient(420px 160px at 90% 0%, rgba(155,123,255,.14), transparent 65%);
+      opacity: .9;
+      pointer-events:none;
+    }
+    .project > *{ position: relative; z-index:1; }
+
+    .proj-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .proj-title{
+      margin:0;
+      font-size: 16px;
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+    .proj-title i{
+      color: rgba(88,166,255,.95);
+      filter: drop-shadow(0 6px 14px rgba(88,166,255,.15));
+    }
+    .proj-meta{
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+    .pill{
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing:.15px;
+      white-space: nowrap;
+    }
+    .project p{
+      margin: 12px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+    .project .links{
+      margin-top: 14px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items:center;
+      color: rgba(255,255,255,.90);
+    }
+    .mini{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 9px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.90);
+      font-weight: 800;
+      font-size: 12px;
+      transition: .2s ease;
+    }
+    .mini:hover{
+      border-color: rgba(88,166,255,.35);
+      background: rgba(88,166,255,.07);
+      transform: translateY(-1px);
+    }
+    .mini i{ color: rgba(88,166,255,.95); }
+
+    @media (max-width: 900px){
+      .project{ grid-column: span 12; }
+    }
+
+    /* Skills */
+    .skills{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .skill{
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.90);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing:.15px;
+      display:inline-flex;
+      align-items:center;
+      gap: 9px;
+    }
+    .skill i{ color: rgba(88,166,255,.95); }
+
+    /* Footer */
+    footer{
+      padding: 34px 0 50px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .foot{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 18px;
+    }
+
+    /* Modal */
+    .modal{
+      position: fixed;
+      inset: 0;
+      display:none;
+      place-items:center;
+      z-index: 100;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 18px;
+    }
+    .modal.open{ display:grid; }
+    .modal-card{
+      width: min(860px, 100%);
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(22,27,34,.78), rgba(22,27,34,.45));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .modal-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .modal-head h3{
+      margin:0;
+      font-size: 15px;
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+    .modal-close{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.90);
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor:pointer;
+      font-weight: 900;
+      transition:.2s ease;
+    }
+    .modal-close:hover{
+      border-color: rgba(88,166,255,.35);
+      background: rgba(88,166,255,.07);
+      transform: translateY(-1px);
+    }
+    .modal-body{
+      padding: 18px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 16px;
+    }
+    @media (max-width: 860px){
+      .modal-body{ grid-template-columns: 1fr; }
+    }
+
+    .modal-desc{
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    .modal-box{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding: 14px;
+    }
+    .modal-box h4{
+      margin:0 0 8px;
+      font-size: 13px;
+      letter-spacing: .2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.80);
+    }
+    .list{
+      margin:0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+    .modal-links{
       margin-top: 10px;
-      font-size: 1.5em;
-      font-weight: normal;
-      color: #8b949e;
-    }
-
-    .projects {
-      display: flex;
+      display:flex;
       flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      padding: 40px;
+      gap: 10px;
     }
 
-    .card {
-      background: #161b22;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(88,166,255,0.2);
-      width: 280px;
-      transition: transform 0.3s ease;
-    }
-
-    .card:hover {
-      transform: scale(1.05);
-    }
-
-    .card h3 {
-      margin-top: 0;
-      color: #58a6ff;
-    }
-
-    .card p {
-      color: #c9d1d9;
-    }
-
-    .resume {
-      padding: 40px;
-      text-align: center;
-    }
-
-    .resume-icons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
-      font-size: 2rem;
-      color: #58a6ff;
-    }
-
-    .footer {
-      padding: 20px;
-      text-align: center;
-      font-size: 0.9em;
-      color: #8b949e;
-    }
-
-    @keyframes fadeInDown {
-      0% { opacity: 0; transform: translateY(-20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    a {
-      color: #58a6ff;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .mesh{ animation:none; }
+      .project, .btn, .mini, .filter-btn, .quick a { transition:none; }
+      canvas#particles{ display:none; }
     }
   </style>
 </head>
+
 <body>
+  <div class="mesh" aria-hidden="true"></div>
+  <canvas id="particles" aria-hidden="true"></canvas>
 
-  <div class="header">
-    <h1>Hi, I'm Raj Mehta</h1>
-    <h2>Embedded Systems Enthusiast · Developer · Builder</h2>
+  <!-- NAV -->
+  <div class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="Go to top">
+        <div class="brand-badge">RM</div>
+        <div>
+          <div style="font-size:14px; line-height:1.1; color: rgba(255,255,255,.92);">Raj Mehta</div>
+          <div style="font-size:12px; color: var(--muted); font-weight:700;">Embedded • Dev • Builder</div>
+        </div>
+      </a>
+
+      <div class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+        <a class="btn ghost" href="Raj_Mehta_Resume.pdf" target="_blank" rel="noopener">
+          <i class="fa-solid fa-file-lines"></i> Resume
+        </a>
+      </div>
+    </div>
   </div>
 
-  <section class="projects">
-    <div class="card">
-      <h3><i class="fas fa-cube"></i> LiDAR Localizer</h3>
-      <p>Capstone project using ROS2 to identify stranded hikers via drone-based LiDAR scanning.</p>
-    </div>
-    <div class="card">
-      <h3><i class="fas fa-gamepad"></i> EliteCode Wars</h3>
-      <p>Multiplayer code battle game built with React & Express, featuring live scoring and chat.</p>
-    </div>
-    <div class="card">
-      <h3><i class="fas fa-thermometer-half"></i> STM32 Handler</h3>
-      <p>Temperature-controlled embedded peripheral driver using bare-metal STM32 programming.</p>
-    </div>
-    <div class="card">
-      <h3><i class="fas fa-dumbbell"></i> Fitness App</h3>
-      <p>JavaFX fitness tracker with calorie tracking, SQL backend, and personalized plans.</p>
-    </div>
-  </section>
+  <!-- HERO -->
+  <header class="container hero" id="top">
+    <div class="hero-grid">
+      <div class="hero-card">
+        <div class="hero-top">
+          <div>
+            <h1 class="headline">Hi, I’m Raj Mehta</h1>
+            <p class="subhead">
+              I build <strong style="color: rgba(255,255,255,.92);">embedded systems</strong>,
+              prototype with <strong style="color: rgba(255,255,255,.92);">ROS2</strong>,
+              and ship <strong style="color: rgba(255,255,255,.92);">full-stack</strong> projects.
+              I like clean architecture, performance, and hardware that actually behaves.
+            </p>
 
-  <section class="resume">
-    <h2>Skills & Tools</h2>
-    <div class="resume-icons">
-      <i class="fab fa-java"></i>
-      <i class="fab fa-python"></i>
-      <i class="fab fa-cuttlefish"></i> <!-- for C/C++ -->
-      <i class="fas fa-microchip"></i> <!-- STM32 -->
-      <i class="fas fa-robot"></i> <!-- ROS2 -->
-      <i class="fas fa-database"></i>
-      <i class="fas fa-terminal"></i> <!-- CLI -->
-      <i class="fab fa-git-alt"></i>
-    </div>
-    <p><a href="Raj_Mehta_Resume.pdf" target="_blank">📄 View My Full Resume (PDF)</a></p>
-  </section>
+            <div class="tagline" aria-label="Highlights">
+              <span class="chip"><i class="fa-solid fa-microchip"></i> Bare-metal & RTOS</span>
+              <span class="chip"><i class="fa-solid fa-robot"></i> ROS2 & perception</span>
+              <span class="chip"><i class="fa-solid fa-terminal"></i> Developer tooling</span>
+              <span class="chip"><i class="fa-solid fa-bolt"></i> Systems mindset</span>
+            </div>
 
-  <div class="footer">
-    &copy; 2025 Raj Mehta · Built with HTML/CSS · Hosted on GitHub Pages
+            <div class="hero-actions">
+              <a class="btn primary" href="#projects">
+                <i class="fa-solid fa-diagram-project"></i> Explore Projects
+              </a>
+              <a class="btn" href="Raj_Mehta_Resume.pdf" target="_blank" rel="noopener">
+                <i class="fa-solid fa-file-arrow-down"></i> View Resume
+              </a>
+              <!-- Replace links below with yours -->
+              <a class="btn" href="https://github.com/" target="_blank" rel="noopener">
+                <i class="fa-brands fa-github"></i> GitHub
+              </a>
+              <a class="btn" href="https://www.linkedin.com/" target="_blank" rel="noopener">
+                <i class="fa-brands fa-linkedin"></i> LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="side" aria-label="Quick info">
+        <h3>Currently</h3>
+        <p>
+          Exploring embedded + robotics workflows: sensor fusion, localization, and high-reliability
+          drivers. I enjoy building demos that feel “product-grade”.
+        </p>
+
+        <div class="quick">
+          <!-- Replace with real links (email, GitHub, LinkedIn, etc.) -->
+          <a href="#contact">
+            <span><i class="fa-solid fa-paper-plane" style="color: rgba(88,166,255,.95)"></i> Contact</span>
+            <small>Let’s build</small>
+          </a>
+          <a href="Raj_Mehta_Resume.pdf" target="_blank" rel="noopener">
+            <span><i class="fa-solid fa-file-lines" style="color: rgba(88,166,255,.95)"></i> Resume</span>
+            <small>PDF</small>
+          </a>
+          <a href="#projects">
+            <span><i class="fa-solid fa-fire" style="color: rgba(88,166,255,.95)"></i> Featured</span>
+            <small>Top work</small>
+          </a>
+        </div>
+
+        <div style="margin-top:14px; border-top:1px solid rgba(255,255,255,.08); padding-top:14px;">
+          <h3>Tech I like</h3>
+          <p style="margin-bottom:0;">
+            C/C++, STM32, ROS2, Python, Git, Linux, databases, CI, and “measure-first” debugging.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <!-- PROJECTS -->
+  <main class="container">
+    <section id="projects">
+      <div class="section-title">
+        <div>
+          <h2>Projects</h2>
+          <p>Click a card for details. Use filters to focus by category.</p>
+        </div>
+        <div class="filters" role="tablist" aria-label="Project filters">
+          <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button class="filter-btn" data-filter="embedded" role="tab" aria-selected="false">Embedded</button>
+          <button class="filter-btn" data-filter="robotics" role="tab" aria-selected="false">Robotics</button>
+          <button class="filter-btn" data-filter="fullstack" role="tab" aria-selected="false">Full-Stack</button>
+        </div>
+      </div>
+
+      <div class="grid" id="projectGrid" aria-label="Project list">
+
+        <!-- LiDAR Localizer -->
+        <article class="project" tabindex="0"
+                 data-tags="robotics"
+                 data-title="LiDAR Localizer"
+                 data-icon="fa-cube"
+                 data-summary="Capstone project using ROS2 to identify stranded hikers via drone-based LiDAR scanning."
+                 data-desc="A ROS2-based perception + localization pipeline designed for drone-mounted LiDAR scanning in search-and-rescue scenarios. Emphasis on robust mapping, state estimation, and practical field constraints (noise, motion, partial scans)."
+                 data-highlights="ROS2 nodes & message design|Point cloud filtering + clustering|Localization strategy + map alignment|Simulation + repeatable test cases"
+                 data-stack="ROS2, C++, Python, LiDAR/PointCloud, Linux"
+                 data-links='[{"label":"Demo","icon":"fa-circle-play","href":"#"},{"label":"Code","icon":"fa-brands fa-github","href":"#"}]'>
+          <div class="proj-top">
+            <h3 class="proj-title"><i class="fas fa-cube"></i> LiDAR Localizer</h3>
+            <div class="proj-meta">
+              <span class="pill">Robotics</span>
+              <span class="pill">ROS2</span>
+              <span class="pill">LiDAR</span>
+            </div>
+          </div>
+          <p>Capstone project using ROS2 to identify stranded hikers via drone-based LiDAR scanning.</p>
+          <div class="links" aria-label="Quick links">
+            <span class="mini"><i class="fa-solid fa-magnifying-glass"></i> View details</span>
+          </div>
+        </article>
+
+        <!-- EliteCode Wars -->
+        <article class="project" tabindex="0"
+                 data-tags="fullstack"
+                 data-title="EliteCode Wars"
+                 data-icon="fa-gamepad"
+                 data-summary="Multiplayer code battle game built with React & Express, featuring live scoring and chat."
+                 data-desc="A real-time multiplayer coding duel platform. Players join rooms, solve timed prompts, and see live results. Built for responsiveness and low-latency updates with a clean separation between API, realtime events, and UI state."
+                 data-highlights="Room matchmaking + chat|Live scoring updates|Secure code execution strategy (planned/isolated)|Responsive UI with clean UX"
+                 data-stack="React, Node/Express, WebSockets, SQL/NoSQL (choose), Docker (optional)"
+                 data-links='[{"label":"Live Site","icon":"fa-arrow-up-right-from-square","href":"#"},{"label":"Code","icon":"fa-brands fa-github","href":"#"}]'>
+          <div class="proj-top">
+            <h3 class="proj-title"><i class="fas fa-gamepad"></i> EliteCode Wars</h3>
+            <div class="proj-meta">
+              <span class="pill">Full-Stack</span>
+              <span class="pill">React</span>
+              <span class="pill">Express</span>
+            </div>
+          </div>
+          <p>Multiplayer code battle game built with React & Express, featuring live scoring and chat.</p>
+          <div class="links" aria-label="Quick links">
+            <span class="mini"><i class="fa-solid fa-magnifying-glass"></i> View details</span>
+          </div>
+        </article>
+
+        <!-- STM32 Handler -->
+        <article class="project" tabindex="0"
+                 data-tags="embedded"
+                 data-title="STM32 Handler"
+                 data-icon="fa-thermometer-half"
+                 data-summary="Temperature-controlled embedded peripheral driver using bare-metal STM32 programming."
+                 data-desc="A bare-metal STM32 driver + control loop that reads temperature sensing input and drives a controlled output. Designed with predictable timing, debuggability, and clean HAL boundaries."
+                 data-highlights="Peripheral setup & register-level control|PID/control loop tuning approach|Safe defaults + fault handling|Serial logging & test harness"
+                 data-stack="C/C++, STM32, UART/SPI/I2C, Debug probes, Datasheets"
+                 data-links='[{"label":"Code","icon":"fa-brands fa-github","href":"#"},{"label":"Writeup","icon":"fa-solid fa-file-lines","href":"#"}]'>
+          <div class="proj-top">
+            <h3 class="proj-title"><i class="fas fa-thermometer-half"></i> STM32 Handler</h3>
+            <div class="proj-meta">
+              <span class="pill">Embedded</span>
+              <span class="pill">STM32</span>
+              <span class="pill">Bare-Metal</span>
+            </div>
+          </div>
+          <p>Temperature-controlled embedded peripheral driver using bare-metal STM32 programming.</p>
+          <div class="links" aria-label="Quick links">
+            <span class="mini"><i class="fa-solid fa-magnifying-glass"></i> View details</span>
+          </div>
+        </article>
+
+        <!-- Fitness App -->
+        <article class="project" tabindex="0"
+                 data-tags="fullstack"
+                 data-title="Fitness App"
+                 data-icon="fa-dumbbell"
+                 data-summary="JavaFX fitness tracker with calorie tracking, SQL backend, and personalized plans."
+                 data-desc="A desktop fitness tracker with structured data storage and personalized planning. Emphasis on maintainable domain modeling (users, meals, workouts), strong validation, and a clean UI flow."
+                 data-highlights="JavaFX UI & state management|SQL schema & queries|User plans + analytics|Export/reporting possibilities"
+                 data-stack="Java, JavaFX, SQL, JDBC"
+                 data-links='[{"label":"Code","icon":"fa-brands fa-github","href":"#"}]'>
+          <div class="proj-top">
+            <h3 class="proj-title"><i class="fas fa-dumbbell"></i> Fitness App</h3>
+            <div class="proj-meta">
+              <span class="pill">Full-Stack</span>
+              <span class="pill">JavaFX</span>
+              <span class="pill">SQL</span>
+            </div>
+          </div>
+          <p>JavaFX fitness tracker with calorie tracking, SQL backend, and personalized plans.</p>
+          <div class="links" aria-label="Quick links">
+            <span class="mini"><i class="fa-solid fa-magnifying-glass"></i> View details</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="section-title">
+        <div>
+          <h2>Skills & Tools</h2>
+          <p>A quick overview. (You can reorder these to match your strongest story.)</p>
+        </div>
+      </div>
+
+      <div class="skills" aria-label="Skills">
+        <span class="skill"><i class="fa-brands fa-cuttlefish"></i> C / C++</span>
+        <span class="skill"><i class="fa-solid fa-microchip"></i> STM32</span>
+        <span class="skill"><i class="fa-solid fa-robot"></i> ROS2</span>
+        <span class="skill"><i class="fa-brands fa-python"></i> Python</span>
+        <span class="skill"><i class="fa-brands fa-java"></i> Java</span>
+        <span class="skill"><i class="fa-brands fa-git-alt"></i> Git</span>
+        <span class="skill"><i class="fa-solid fa-terminal"></i> Linux / CLI</span>
+        <span class="skill"><i class="fa-solid fa-database"></i> SQL</span>
+        <span class="skill"><i class="fa-solid fa-network-wired"></i> Networking</span>
+        <span class="skill"><i class="fa-solid fa-screwdriver-wrench"></i> Debugging</span>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-title">
+        <div>
+          <h2>Contact</h2>
+          <p>Make it easy for recruiters and collaborators to reach you.</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="project" style="grid-column: span 12; cursor: default;">
+          <div class="proj-top">
+            <h3 class="proj-title"><i class="fa-solid fa-envelope"></i> Let’s talk</h3>
+            <div class="proj-meta">
+              <span class="pill">Fast reply</span>
+              <span class="pill">Collab-friendly</span>
+            </div>
+          </div>
+          <p style="max-width: 80ch;">
+            Email is the best way to reach me. I’m happy to chat about embedded systems,
+            robotics, or product-minded engineering projects.
+          </p>
+
+          <div class="links" style="margin-top: 16px;">
+            <!-- Replace with your real email + links -->
+            <a class="mini" href="mailto:raj@example.com"><i class="fa-solid fa-paper-plane"></i> raj@example.com</a>
+            <a class="mini" href="https://github.com/" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+            <a class="mini" href="https://www.linkedin.com/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+          </div>
+
+          <p style="margin-top: 14px; color: var(--muted);">
+            Tip: update the email + GitHub/LinkedIn URLs above so the buttons actually point to you.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="foot">
+        <div>© <span id="year"></span> Raj Mehta · Built with HTML/CSS/JS · Hosted on GitHub Pages</div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="mini" href="#top"><i class="fa-solid fa-arrow-up"></i> Back to top</a>
+          <a class="mini" href="Raj_Mehta_Resume.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-file-lines"></i> Resume</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card" role="document">
+      <div class="modal-head">
+        <h3 id="modalTitle"><i class="fa-solid fa-diagram-project"></i> Project</h3>
+        <button class="modal-close" id="modalClose" aria-label="Close modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div>
+          <div class="modal-desc" id="modalDesc"></div>
+
+          <div class="modal-links" id="modalLinks"></div>
+        </div>
+
+        <div class="modal-box">
+          <h4>Highlights</h4>
+          <ul class="list" id="modalHighlights"></ul>
+
+          <div style="height: 12px;"></div>
+
+          <h4>Tech Stack</h4>
+          <div class="skills" id="modalStack" style="margin-top: 8px;"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
+  <script>
+    // ====== YEAR ======
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // ====== PROJECT FILTERS ======
+    const filterButtons = Array.from(document.querySelectorAll(".filter-btn"));
+    const projectCards = Array.from(document.querySelectorAll(".project[data-tags]"));
+
+    function setActiveFilter(filter){
+      filterButtons.forEach(btn => {
+        const active = btn.dataset.filter === filter;
+        btn.classList.toggle("active", active);
+        btn.setAttribute("aria-selected", active ? "true" : "false");
+      });
+
+      projectCards.forEach(card => {
+        const tags = (card.dataset.tags || "").split(",").map(s => s.trim());
+        const show = (filter === "all") || tags.includes(filter);
+        card.style.display = show ? "" : "none";
+      });
+    }
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener("click", () => setActiveFilter(btn.dataset.filter));
+    });
+
+    // ====== MODAL ======
+    const modal = document.getElementById("modal");
+    const modalClose = document.getElementById("modalClose");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDesc = document.getElementById("modalDesc");
+    const modalHighlights = document.getElementById("modalHighlights");
+    const modalStack = document.getElementById("modalStack");
+    const modalLinks = document.getElementById("modalLinks");
+
+    let lastFocused = null;
+
+    function openModalFromCard(card){
+      lastFocused = document.activeElement;
+
+      const title = card.dataset.title || "Project";
+      const icon = card.dataset.icon || "fa-diagram-project";
+      const desc = card.dataset.desc || card.dataset.summary || "";
+      const highlights = (card.dataset.highlights || "").split("|").filter(Boolean);
+      const stack = (card.dataset.stack || "").split(",").map(s => s.trim()).filter(Boolean);
+
+      modalTitle.innerHTML = `<i class="fa-solid ${icon}"></i> ${title}`;
+      modalDesc.textContent = desc;
+
+      modalHighlights.innerHTML = "";
+      highlights.forEach(h => {
+        const li = document.createElement("li");
+        li.textContent = h;
+        modalHighlights.appendChild(li);
+      });
+
+      modalStack.innerHTML = "";
+      stack.forEach(s => {
+        const span = document.createElement("span");
+        span.className = "skill";
+        span.innerHTML = `<i class="fa-solid fa-check"></i> ${s}`;
+        modalStack.appendChild(span);
+      });
+
+      modalLinks.innerHTML = "";
+      try{
+        const links = JSON.parse(card.dataset.links || "[]");
+        links.forEach(l => {
+          const a = document.createElement("a");
+          a.className = "btn";
+          a.href = l.href || "#";
+          a.target = (l.href && l.href.startsWith("http")) ? "_blank" : "_self";
+          a.rel = "noopener";
+          a.innerHTML = `<i class="${l.icon || "fa-solid fa-arrow-up-right-from-square"}"></i> ${l.label || "Link"}`;
+          modalLinks.appendChild(a);
+        });
+      }catch(e){
+        // ignore malformed links
+      }
+
+      modal.classList.add("open");
+      modalClose.focus();
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal(){
+      modal.classList.remove("open");
+      document.body.style.overflow = "";
+      if (lastFocused) lastFocused.focus();
+    }
+
+    projectCards.forEach(card => {
+      card.addEventListener("click", () => openModalFromCard(card));
+      card.addEventListener("keydown", (e) => {
+        if(e.key === "Enter" || e.key === " "){
+          e.preventDefault();
+          openModalFromCard(card);
+        }
+      });
+    });
+
+    modalClose.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => {
+      if(e.target === modal) closeModal();
+    });
+    window.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && modal.classList.contains("open")) closeModal();
+    });
+
+    // ====== SIMPLE PARTICLES (no libraries) ======
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let w, h, particles;
+
+    function resize(){
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      const count = Math.min(120, Math.floor((w*h)/18000));
+      particles = new Array(count).fill(0).map(() => ({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        r: 0.7 + Math.random()*1.8,
+        vx: (-0.25 + Math.random()*0.5),
+        vy: (-0.25 + Math.random()*0.5),
+        a: 0.08 + Math.random()*0.18
+      }));
+    }
+    window.addEventListener("resize", resize, { passive: true });
+    resize();
+
+    function tick(){
+      ctx.clearRect(0,0,w,h);
+
+      // particles
+      for(const p of particles){
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if(p.x < -20) p.x = w+20;
+        if(p.x > w+20) p.x = -20;
+        if(p.y < -20) p.y = h+20;
+        if(p.y > h+20) p.y = -20;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(88,166,255,${p.a})`;
+        ctx.fill();
+      }
+
+      // sparse connecting lines
+      for(let i=0;i<particles.length;i++){
+        for(let j=i+1;j<particles.length;j++){
+          const a = particles[i], b = particles[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const d2 = dx*dx + dy*dy;
+          if(d2 < 140*140){
+            const alpha = (1 - (d2/(140*140))) * 0.10;
+            ctx.strokeStyle = `rgba(155,123,255,${alpha})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+    tick();
+  </script>
 </body>
 </html>
